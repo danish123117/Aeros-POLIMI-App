@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <title>Complete Orders</title>
+</head>
+<body>
+    <div class="header">  
+        <a href="https://aeros-project.eu/">
+            <img class="logo" src="{{ url_for('static', filename='images/aerOS-logo.png') }}" alt="aeROS logo">
+        </a>
+        <a href="https://aeros-project.eu/use-cases/">
+            <img class="usecase proj" src="{{ url_for('static', filename='images/title2.png') }}" alt="Use-case" height="40">
+        </a>
+        <a href="https://www.made-cc.eu/en/">
+            <img class="logo" src="{{ url_for('static', filename='images/logo_MADE.png') }}" alt="MADE logo">
+        </a>
+        <a href="https://www.polimi.it/en/">
+            <img class="logo" src="{{ url_for('static', filename='images/Logo_Politecnico_Milano.png') }}" alt="POLIMI logo">
+        </a>
+    </div>
+
+    <div class="container">
+        <div class="main">
+            <h1>Complete Orders</h1>
+            {% if orders %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Timestamp</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order[0] }}</td>
+                        <td>{{ order[1] }}</td>
+                        <td>{{ order[2] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No complete orders found.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,119 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #edf2f7;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header Styling */
+.header {
+    background-color: #b3e5e5;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header .logo {
+    height: 50px;
+    width: auto;
+}
+
+/* Container Styling */
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* Main Section Styling */
+.main {
+    width: 50%;
+    background: #ffffff;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 3px rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.main h1 {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+/* Form and Button Styling */
+input, button {
+    font-size: 1.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+button {
+    cursor: pointer;
+    background: #b3e5e5;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background: #81d4d4;
+}
+
+/* Table Styling */
+table {
+    width: 80%;
+    margin-top: 1rem;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+table th, table td {
+    text-align: left;
+    padding: 1rem;
+    border: 1px solid #ddd;
+}
+
+table thead {
+    background: #b3e5e5;
+    color: #fff;
+}
+
+table tbody tr:nth-child(odd) {
+    background: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background: #f1f1f1;
+}
+
+/* General Text Styling */
+h1 {
+    margin: 1rem 0;
+    text-align: center;
+    color: #333;
+}

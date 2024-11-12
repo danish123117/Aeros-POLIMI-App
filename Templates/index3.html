@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Management</title>
+</head>
+<body>
+    <h1>Order Management</h1>
+
+    <h2>Pending Orders</h2>
+    <ul>
+        {% for order in pending_orders %}
+            <li>{{ order.id }} - {{ order.description.value }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Completed Orders</h2>
+    <ul>
+        {% for order in completed_orders %}
+            <li>{{ order.id }} - {{ order.description.value }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

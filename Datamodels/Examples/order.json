@@ -1,0 +1,11 @@
+{
+    "id": "urn:ngsi-ld:order:order001",
+    "type": "order",
+    "incompleteOrderList": [["1004","2024-01-16T17:50:07.5870Z",5],["1005","2024-01-16T17:51:07.5870Z",4]],
+    "processingOrderList":[],
+    "completedOrderList":[["1001","2024-01-16T17:50:07.5870Z",4],["1002","2024-01-16T17:51:07.5870Z",1]]
+
+}
+
+
+
