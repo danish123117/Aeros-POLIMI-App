@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
-    <title>POL-AND</title>
+    <title>Complete Orders</title>
 </head>
 <body>
     <div class="header">  
@@ -14,60 +14,41 @@
         <a href="https://www.polimi.it/en/"><img class="logo" src="{{ url_for('static', filename='images/Logo_Politecnico_Milano.png') }}" alt="POLIMI logo"></a>
     </div>
     <div class="container">
-        <h1>POLIMI Order Management App</h1>
+        <h1>View Completed orders</h1>
         <div class="status-board">
-            <div class="status">Waiting: <span id="waiting">{{ incomplete_orders | length }}</span></div>
-            <div class="status">In Process: <span id="inprocess">{{ processing_orders | length }}</span></div>
             <div class="status">Processed: <span id="processed">{{ completed_orders | length }}</span></div>
         </div>
 
-        <div class="controls">
-            <button id="start-batch">Start Producing Next Batch</button>
-            <button id="complete-batch">Dispatch Order</button>
-            <button id="history" onclick="window.location.href='/history'">View Completed Orders</button>
-        </div>
-
-        <h2>Current Order Batch</h2>
+        <h2>Completed orders </h2>
         <table>
             <thead>
                 <tr>
                     <th>Order ID</th>
-                    <th>Start Time</th>
+                    <th>Production Start Time</th>
+                    <th>Production End Time</th>               
+                    <th>Production Location</th>
                     <th>Quantity</th>
                 </tr>
             </thead>
             <tbody id="current-batch">
-                {% for order in processing_orders %}
+                {% for order in completed_orders %}
                 <tr>
                     <td>{{ order["id"][24:] }}</td>
                     <td>{{ order["productionStartTime"] }}</td>
+                    <td>{{ order["productionEndTime"] }}</td>
+                    <td>{{ order["productionLocation"] }}</td>
                     <td>{{ order["orderQuantity"] }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-
-        <h2>Waiting List</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Order Arrival Time</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-            <tbody id="waiting-list">
-                {% for order in incomplete_orders %}
-                <tr>
-                    <td>{{ order["id"][24:] }}</td>
-                    <td>{{ order["creationTime"] }}</td>
-                    <td>{{ order["orderQuantity"] }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
+        <div class="controls">
+            <form action="/">
+                <button type = 'submit'>Return Home</button>
+            </form>
+        </div>
+       
     </div>
-    <script src="{{ url_for('static', filename='script_p1.js') }}"></script> 
+     <script src="{{ url_for('static', filename='script_p2.js') }}"></script>
 </body>
 </html>
