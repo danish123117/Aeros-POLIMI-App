@@ -21,6 +21,8 @@ ORION_LD_PORT = os.getenv("ORION_LD_PORT", "1026")
 CONTEXT_URL = os.getenv("CONTEXT_URL", "localhost")
 CONTEXT_PORT = os.getenv("CONTEXT_PORT", "5051")
 MADE_ORION_LD_URL = os.getenv("MADE_ORION_LD_URL", "localhost")
+MADE_CONTEXT_URL = os.getenv("CONTEXT_URL", "localhost")
+MADE_CONTEXT_PORT = os.getenv("CONTEXT_PORT", "5051")
 AGV_URL = os.getenv("AGV_URL", "localhost")
 AGV_PORT = os.getenv("AGV_PORT", "5000")
 
@@ -49,6 +51,7 @@ def dispatch_agv(location):
     except requests.RequestException as e:
         logger.error(f"Error dispatching AGV: {e}")
         return False
+
 
 
 ################Routes#######################
@@ -80,29 +83,6 @@ def display_incomplete_orders():
 
     # Render the HTML template with the incomplete orders data
     return render_template('incomplete_orders.html', orders=incomplete_orders)
-@app.route('/complete_orders', methods=['GET'])
-def display_complete_orders():
-    # Fetch the entity from the NGSI-LD context broker
-    orion = "localhost"
-    orion_port = 1026
-
-    order_entity = ngsi_get_current(
-        entity="urn:ngsi-ld:order:order001",
-        orion=orion,
-        orion_port=orion_port,
-        entity_type="order"
-    )
-
-    if order_entity:
-        # Extract the incomplete orders list
-        complete_orders = order_entity.get("completedOrderList", [])
-    else:
-        # If there's an error or no entity, set to empty and log the issue
-        complete_orders = []
-        print("Error fetching or parsing the entity.")
-
-    # Render the HTML template with the incomplete orders data
-    return render_template('complete_orders.html', orders=complete_orders)
 
 @app.route("/start_production", methods=["POST"])
 def start_production():
@@ -140,6 +120,7 @@ def complete_production():
     if in_process_list:
         timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%fZ")[:-2]
         response = update_complete_order_list(in_process_list, ORION_LD_URL, ORION_LD_PORT, CONTEXT_URL, CONTEXT_PORT,timestamp)
+        response_made = update_made_orion_list(in_process_list, MADE_ORION_LD_URL, MADE_CONTEXT_URL, MADE_CONTEXT_PORT,timestamp)
         if response:
             response_agv = dispatch_agv(location=0)
             return jsonify({"success": True})

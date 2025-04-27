@@ -1,5 +1,7 @@
 import requests
 import logging
+import json
+import os
 # Orion-LD Configuration
 
 
@@ -191,11 +193,43 @@ def ngsi_subscribe_status_update(orion, orion_port, context, context_port, notif
 
     response = requests.post(url, headers=headers, data=json.dumps(subscription))
     return response
+
 #UPDATE WITH @CONTEXT
+def _patch_made_entity_id_complete(entityid, MADE_ORION_LD_URL, MADE_CONTEXT_URL, MADE_CONTEXT_PORT,timestamp):
+    """Extract the entity ID from the entity list."""
+    url = f"http://{MADE_ORION_LD_URL}/ngsi-ld/v1/entities/{entityid}/attrs"
+    headers = {
+        'Content-Type': "application/json",
+        "Link": f'<http://{MADE_CONTEXT_URL}:{MADE_CONTEXT_PORT}/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+    }
+
+    update_payload = {
+        "orderStatus": {
+            "type": "Property",
+            "value": "COMPLETED"
+        },  
+          "productionEndTime": {
+              "type": "Property",
+              "value": timestamp
+        }
+                    }
+
+    try:
+        response = requests.patch(url, json=update_payload, headers=headers)
+        response.raise_for_status()
+        logger.info("Successfully updated processingOrderList.")
+        return True
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Failed to update entity: {e}")
+        return False
 
 
+def update_made_orion_list(in_process_list, MADE_ORION_LD_URL, MADE_CONTEXT_URL, MADE_CONTEXT_PORT,timestamp):
 
-
+    for order in in_process_list:
+        if not _patch_made_entity_id_complete(order["id"], MADE_ORION_LD_URL, MADE_CONTEXT_URL, MADE_CONTEXT_PORT,timestamp):
+            return False
+    return True   
 
 
 
